@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CustomValidations.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CustomValidations.Controllers;
 
@@ -13,13 +14,18 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    [HttpGet("")]
+    [HttpGet("")] //displays our form
     public IActionResult Index()
     {
+        ViewBag.Choices =  new List<SelectListItem>(){
+            new SelectListItem("pizza","pizza"),
+            new SelectListItem("sushi","sushi"),
+            new SelectListItem("cake","cake")
+        };
         return View();
     }
 
-    [HttpPost("process")]
+    [HttpPost("process")] //process our form
     public IActionResult Process(MyForm formData)
     {
         if (ModelState.IsValid)
@@ -29,7 +35,8 @@ public class HomeController : Controller
         return View("Index");
     }
 
-    public ViewResult Results(MyForm formData)
+    [HttpGet("results")]
+    public ViewResult Results(MyForm formData) 
     {
         return View(formData);
     }
