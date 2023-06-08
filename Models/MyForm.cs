@@ -5,7 +5,6 @@ public class MyForm
 {
     [Required]
     [NoZNames]
-
     public string? Name {get;set;}
     // [Discount]
     [SelectOption("FREE99","PARTY")]
@@ -49,10 +48,10 @@ public class DiscountAttribute : ValidationAttribute
 
         if (value == null || Options.Contains((string)value))
         {        
-            // we return an error message in ValidationResult we want to render    
+            //We were successful and can report our success  
             return ValidationResult.Success;  
         } else {   
-            // Otherwise, we were successful and can report our success  
+            //Otherwise we return an error message in ValidationResult we want to render    
             return new ValidationResult("Invalid discount code");   
         }  
     }
@@ -60,22 +59,22 @@ public class DiscountAttribute : ValidationAttribute
 
 public class SelectOptionAttribute : ValidationAttribute
 {    
-    // Call upon the protected IsValid method
     public string[]? Options {get;set;}
 
     public SelectOptionAttribute(params string[] options)
     {
         this.Options = options;
     }
+    // Call upon the protected IsValid method
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)    
     {   
 
         if (value == null || Options.Contains((string)value))
         {        
-            // we return an error message in ValidationResult we want to render    
+            // We were successful and can report our success  
             return ValidationResult.Success;  
         } else {   
-            // Otherwise, we were successful and can report our success  
+            // otherwise we return an error message in ValidationResult we want to render    
             return new ValidationResult("Please choose a valid option and/or stop hacking my site");   
         }  
     }
